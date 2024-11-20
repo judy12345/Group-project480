@@ -37,6 +37,34 @@
             text-decoration: underline;
         }
         .container {
+            display: flex;
+            flex-wrap: wrap; /* Allows wrapping to the next line if necessary */
+            justify-content: space-around; /* Adds spacing between boxes */
+            gap: 20px; /* Adds consistent spacing between boxes */
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 10px;
+        }
+        .product-box {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 30%; /* Each box takes 30% of the container's width */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .product-box h2 {
+            font-size: 18px;
+            margin: 0 0 10px;
+            color: #0073e6;
+        }
+        .product-box p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .container {
             max-width: 1200px;
             margin: 20px auto;
             padding: 20px;
@@ -86,6 +114,28 @@
         .product-card p {
             margin: 0;
             color: #555;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #0073e6;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Make layout responsive for smaller screens */
+        @media (max-width: 768px) {
+            .product-box {
+                width: 45%; /* 2 boxes per row on smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-box {
+                width: 100%; /* Stacks boxes in a single column on very small screens */
+            }
         }
     </style>
 </head>
