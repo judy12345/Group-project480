@@ -44,48 +44,48 @@
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .card {
+        .search-box {
             margin-bottom: 20px;
-            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .search-box input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            transition: box-shadow 0.3s ease;
+            border-radius: 5px 0 0 5px;
         }
-        .card:hover {
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-        .card h2 {
-            margin: 0 0 10px;
-            font-size: 20px;
-            color: #0073e6;
-        }
-        .card p {
-            margin: 0;
-            color: #555;
-        }
-        footer {
+        .search-box button {
+            padding: 10px;
+            font-size: 16px;
             background: #0073e6;
             color: white;
-            text-align: center;
-            padding: 10px 0;
+            border: none;
+            cursor: pointer;
+            border-radius: 0 5px 5px 0;
+        }
+        .search-box button:hover {
+            background: #005bb5;
+        }
+        .results {
             margin-top: 20px;
         }
-        footer p {
-            margin: 0;
-            font-size: 14px;
+        .product-card {
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            .card {
-                padding: 15px;
-            }
-            nav a {
-                font-size: 14px;
-                margin: 0 10px;
-            }
+        .product-card h2 {
+            margin: 0 0 5px;
+            font-size: 18px;
+            color: #0073e6;
+        }
+        .product-card p {
+            margin: 0;
+            color: #555;
         }
     </style>
 </head>
@@ -105,25 +105,15 @@
 
     <!-- Main Content -->
     <div class="container">
-        <div class="card">
-            <h2>Store Management</h2>
-            <p>Manage store details, hours of operation, and inventory tracking.</p>
+        <!-- Search Box -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search for clothing items...">
+            <button onclick="searchProducts()">Search</button>
         </div>
-        <div class="card">
-            <h2>Product Management</h2>
-            <p>Track products, brands, categories, and pricing information.</p>
-        </div>
-        <div class="card">
-            <h2>Vendor Management</h2>
-            <p>Manage vendor details and the products they supply.</p>
-        </div>
-        <div class="card">
-            <h2>Customer Management</h2>
-            <p>Track customer information, purchases, and transaction history.</p>
-        </div>
-        <div class="card">
-            <h2>Reports and Analysis</h2>
-            <p>Generate reports for sales, inventory, and customer data.</p>
+
+        <!-- Search Results -->
+        <div class="results" id="results">
+            <!-- Search results will appear here -->
         </div>
     </div>
 
@@ -131,5 +121,49 @@
     <footer>
         <p>&copy; 2024 MarketPlus. All Rights Reserved.</p>
     </footer>
+
+    <script>
+        // Dummy data for clothing products
+        const products = [
+            { name: "Men's T-Shirt", category: "Casual Wear", size: "M", price: "$15.99", brand: "Brand A" },
+            { name: "Women's Jeans", category: "Denim", size: "28", price: "$39.99", brand: "Brand B" },
+            { name: "Unisex Hoodie", category: "Outerwear", size: "L", price: "$49.99", brand: "Brand C" },
+            { name: "Kids' Sneakers", category: "Footwear", size: "12", price: "$25.99", brand: "Brand D" },
+            { name: "Formal Shirt", category: "Formal Wear", size: "XL", price: "$29.99", brand: "Brand E" },
+        ];
+
+        // Function to search products
+        function searchProducts() {
+            const query = document.getElementById("searchInput").value.toLowerCase();
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = ""; // Clear previous results
+
+            // Filter products based on the search query
+            const filteredProducts = products.filter(product =>
+                product.name.toLowerCase().includes(query) ||
+                product.category.toLowerCase().includes(query) ||
+                product.brand.toLowerCase().includes(query) ||
+                product.size.toLowerCase().includes(query)
+            );
+
+            // Display results
+            if (filteredProducts.length > 0) {
+                filteredProducts.forEach(product => {
+                    const productCard = document.createElement("div");
+                    productCard.classList.add("product-card");
+                    productCard.innerHTML = `
+                        <h2>${product.name}</h2>
+                        <p><strong>Category:</strong> ${product.category}</p>
+                        <p><strong>Size:</strong> ${product.size}</p>
+                        <p><strong>Price:</strong> ${product.price}</p>
+                        <p><strong>Brand:</strong> ${product.brand}</p>
+                    `;
+                    resultsDiv.appendChild(productCard);
+                });
+            } else {
+                resultsDiv.innerHTML = "<p>No products found.</p>";
+            }
+        }
+    </script>
 </body>
 </html>
