@@ -1,267 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MarketPlus Retail Management System</title>
-    <style>
-        /* General Styles */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background: #0073e6;
-            color: white;
-            padding: 15px 20px;
-            text-align: center;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        nav {
-            background: #005bb5;
-            padding: 10px;
-            text-align: center;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 16px;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        .container {
-            display: flex;
-            flex-wrap: wrap; /* Allows wrapping to the next line if necessary */
-            justify-content: space-around; /* Adds spacing between boxes */
-            gap: 20px; /* Adds consistent spacing between boxes */
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 10px;
-        }
-        .product-box {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            width: 30%; /* Each box takes 30% of the container's width */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            box-sizing: border-box;
-            text-align: center;
-        }
-        .product-box h2 {
-            font-size: 18px;
-            margin: 0 0 10px;
-            color: #0073e6;
-        }
-        .product-box p {
-            margin: 5px 0;
-            color: #555;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .search-box {
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-        }
-        .search-box input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            width: 300px;
-            border: 1px solid #ddd;
-            border-radius: 5px 0 0 5px;
-        }
-        .search-box button {
-            padding: 10px;
-            font-size: 16px;
-            background: #0073e6;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 0 5px 5px 0;
-        }
-        .search-box button:hover {
-            background: #005bb5;
-        }
-        .results {
-            margin-top: 20px;
-        }
-        .product-card {
-            margin-bottom: 15px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .product-card h2 {
-            margin: 0 0 5px;
-            font-size: 18px;
-            color: #0073e6;
-        }
-        .product-card p {
-            margin: 0;
-            color: #555;
-        }
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #0073e6;
-            color: white;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-
-        /* Make layout responsive for smaller screens */
-        @media (max-width: 768px) {
-            .product-box {
-                width: 45%; /* 2 boxes per row on smaller screens */
-            }
-        }
-
-        @media (max-width: 480px) {
-            .product-box {
-                width: 100%; /* Stacks boxes in a single column on very small screens */
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MySQL Query Example</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Header Section -->
-    <header>
-        <h1>MarketPlus Retail Management System</h1>
-    </header>
+  <div class="container">
+    <h1>Query MySQL Database</h1>
+    <form action="/query" method="POST">
+      <label for="query">Enter SQL Query:</label>
+      <input type="text" id="query" name="query" required>
+      <button type="submit">Run Query</button>
+    </form>
 
-    <!-- Navigation Bar -->
-    <nav>
-        <a href="login.html">Login</a>
-        <a href="#">Dashboard</a>
-        <a href="#">Reports</a>
-        <a href="#">Logout</a>
-    </nav>
+    <p>Results:</p>
+    <pre id="results"></pre>
+  </div>
 
-    <!-- Main Content -->
-    <div class="container">
-        <!-- Search Box -->
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search for clothing items...">
-            <button onclick="searchProducts()">Search</button>
-        </div>
+  <script>
+    const form = document.querySelector('form');
+    const resultsContainer = document.getElementById('results');
 
-        <!-- Search Results -->
-        <div class="results" id="results">
-            <!-- Search results will appear here -->
-        </div>
-    </div>
-    
-    <!-- Dashboard Section -->
-    <div class="container">
-        <!-- Dummy product data -->
-        <div class="product-box">
-            <h2>Blue Jeans</h2>
-            <p><strong>Brand:</strong> Levi's</p>
-            <p><strong>Type:</strong> Bottomwear</p>
-            <p><strong>Size:</strong> Medium</p>
-            <p><strong>Price:</strong> $49.99</p>
-        </div>
-        <div class="product-box">
-            <h2>White T-Shirt</h2>
-            <p><strong>Brand:</strong> Hanes</p>
-            <p><strong>Type:</strong> Topwear</p>
-            <p><strong>Size:</strong> Large</p>
-            <p><strong>Price:</strong> $14.99</p>
-        </div>
-        <div class="product-box">
-            <h2>Black Dress</h2>
-            <p><strong>Brand:</strong> Zara</p>
-            <p><strong>Type:</strong> Dress</p>
-            <p><strong>Size:</strong> Small</p>
-            <p><strong>Price:</strong> $79.99</p>
-        </div>
-        <div class="product-box">
-            <h2>Red Hoodie</h2>
-            <p><strong>Brand:</strong> Nike</p>
-            <p><strong>Type:</strong> Outerwear</p>
-            <p><strong>Size:</strong> Large</p>
-            <p><strong>Price:</strong> $59.99</p>
-        </div>
-        <div class="product-box">
-            <h2>Running Shoes</h2>
-            <p><strong>Brand:</strong> Adidas</p>
-            <p><strong>Type:</strong> Footwear</p>
-            <p><strong>Size:</strong> 10</p>
-            <p><strong>Price:</strong> $120.00</p>
-        </div>
-        <div class="product-box">
-            <h2>Winter Jacket</h2>
-            <p><strong>Brand:</strong> Patagonia</p>
-            <p><strong>Type:</strong> Outerwear</p>
-            <p><strong>Size:</strong> Medium</p>
-            <p><strong>Price:</strong> $199.99</p>
-        </div>
-        <!-- Add more products as needed -->
-    </div>
-    
-    <!-- Footer Section -->
-    <footer>
-        <p>&copy; 2024 MarketPlus. All Rights Reserved.</p>
-    </footer>
-
-    <script>
-        // Dummy data for clothing products
-        const products = [
-            { name: "Men's T-Shirt", category: "Casual Wear", size: "M", price: "$15.99", brand: "Brand A" },
-            { name: "Women's Jeans", category: "Denim", size: "28", price: "$39.99", brand: "Brand B" },
-            { name: "Unisex Hoodie", category: "Outerwear", size: "L", price: "$49.99", brand: "Brand C" },
-            { name: "Kids' Sneakers", category: "Footwear", size: "12", price: "$25.99", brand: "Brand D" },
-            { name: "Formal Shirt", category: "Formal Wear", size: "XL", price: "$29.99", brand: "Brand E" },
-        ];
-
-        // Function to search products
-        function searchProducts() {
-            const query = document.getElementById("searchInput").value.toLowerCase();
-            const resultsDiv = document.getElementById("results");
-            resultsDiv.innerHTML = ""; // Clear previous results
-
-            // Filter products based on the search query
-            const filteredProducts = products.filter(product =>
-                product.name.toLowerCase().includes(query) ||
-                product.category.toLowerCase().includes(query) ||
-                product.brand.toLowerCase().includes(query) ||
-                product.size.toLowerCase().includes(query)
-            );
-
-            // Display results
-            if (filteredProducts.length > 0) {
-                filteredProducts.forEach(product => {
-                    const productCard = document.createElement("div");
-                    productCard.classList.add("product-card");
-                    productCard.innerHTML = `
-                        <h2>${product.name}</h2>
-                        <p><strong>Category:</strong> ${product.category}</p>
-                        <p><strong>Size:</strong> ${product.size}</p>
-                        <p><strong>Price:</strong> ${product.price}</p>
-                        <p><strong>Brand:</strong> ${product.brand}</p>
-                    `;
-                    resultsDiv.appendChild(productCard);
-                });
-            } else {
-                resultsDiv.innerHTML = "<p>No products found.</p>";
-            }
-        }
-    </script>
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+      const query = formData.get('query');
+      
+      try {
+        const response = await fetch('/query', {
+          method: 'POST',
+          body: new URLSearchParams(formData)
+        });
+        const data = await response.json();
+        resultsContainer.textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        resultsContainer.textContent = `Error: ${error.message}`;
+      }
+    });
+  </script>
 </body>
 </html>
