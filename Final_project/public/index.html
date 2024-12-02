@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Operations</title>
+    <link rel="stylesheet" href="appdatabase.css">
+</head>
+<body>
+    
+
+    <div class="container">
+        <h1>Database Operations</h1>
+
+        <!-- Query Section -->
+        <form id="query-form">
+            <label for="query">Run SQL Query:</label>
+            <input type="text" id="query" placeholder="e.g., SELECT * FROM Product" required>
+            <button type="submit">Run Query</button>
+        </form>
+        <div class="scrollable-results">
+            <pre id="results"></pre>
+        </div>
+
+
+        <!-- Add Customer Section -->
+        <form id="add-customer-form">
+            <h2>Add Customer</h2>
+            <input type="text" id="first-name" placeholder="First Name" required>
+            <input type="text" id="last-name" placeholder="Last Name" required>
+            <input type="email" id="email" placeholder="Email">
+            <input type="text" id="phone" placeholder="Phone">
+            <textarea id="address" placeholder="Address"></textarea>
+            <button type="submit">Add Customer</button>
+        </form>
+        <p id="operation-result"></p>
+
+
+
+         Add Product Section 
+        <form id="add-product-form">
+            <h2>Add Product</h2>
+            <input type="text" id="product-upc" placeholder="UPC Code" required>
+            <input type="text" id="product-name" placeholder="Product Name" required>
+            <input type="number" id="product-price" placeholder="Price" required>
+            <input type="text" id="product-size" placeholder="Size (optional)">
+            <input type="number" id="product-weight" placeholder="Weight (optional)">
+            <textarea id="product-characteristics" placeholder="Characteristics (optional)"></textarea>
+            <button type="submit">Add Product</button>
+        </form>
+        <!-- Product Search Section -->
+        <form id="search-product-form">
+            <h2>Search Products</h2>
+            <input type="text" id="search-query" placeholder="Enter product name or UPC code" required>
+            <button type="submit">Search</button>
+        </form>
+        <div class="search-results">
+            <h3>Search Results:</h3>
+            <pre id="search-results"></pre>
+        </div>
+
+        <!-- Results Section -->
+        <p id="operation-result"></p>
+    </div>
+
+    <script>
+        // Helper function to handle API requests
+        const apiRequest = async (url, method, body = null) => {
+            const options = { method, headers: { 'Content-Type': 'application/json' } };
+            if (body) options.body = JSON.stringify(body);
+            const response = await fetch(url, options);
+            if (!response.ok) throw new Error(await response.text());
+            return await response.json();
+        };
+
+        // Handle query form
+        document.getElementById('query-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const query = document.getElementById('query').value;
+            try {
+                const results = await apiRequest('http://localhost:3000/query', 'POST', { query });
+                document.getElementById('results').textContent = JSON.stringify(results, null, 2);
+            } catch (error) {
+                document.getElementById('results').textContent = `Error: ${error.message}`;
+            }
+        });
+
+        // Handle add customer form
+        document.getElementById('add-customer-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            // 获取输入值
+            const first_name = document.getElementById('first-name').value;
+            const last_name = document.getElementById('last-name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+
+            // 构造请求体
+            try {
+                const result = await apiRequest('http://localhost:3000/customers', 'POST', {
+                    first_name,
+                    last_name,
+                    email,
+                    phone,
+                    address,
+                });
+                document.getElementById('operation-result').textContent = `Customer added: ${JSON.stringify(result)}`;
+            } catch (error) {
+                document.getElementById('operation-result').textContent = `Error: ${error.message}`;
+            }
+        });
+
+        // Handle product search form
+        document.getElementById('search-product-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const query = document.getElementById('search-query').value;
+            try {
+                const results = await apiRequest(`http://localhost:3000/products/search/${query}`, 'GET');
+                document.getElementById('search-results').textContent = JSON.stringify(results, null, 2);
+            } catch (error) {
+                document.getElementById('search-results').textContent = `Error: ${error.message}`;
+            }
+        });
+
+        // Handle add product form
+        document.getElementById('add-product-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const upc = document.getElementById('product-upc').value;
+            const name = document.getElementById('product-name').value;
+            const price = document.getElementById('product-price').value;
+            const size = document.getElementById('product-size')?.value || null;
+            const weight = document.getElementById('product-weight')?.value || null;
+            const characteristics = document.getElementById('product-characteristics')?.value || null;
+
+            try {
+                const result = await apiRequest('http://localhost:3000/products', 'POST', {
+                    UPC_Code: upc,
+                    Product_Name: name,
+                    Size: size,
+                    Weight: weight,
+                    Characteristics: characteristics,
+                    Price: price,
+                });
+                document.getElementById('operation-result').textContent = `Product added: ${JSON.stringify(result)}`;
+            } catch (error) {
+                document.getElementById('operation-result').textContent = `Error: ${error.message}`;
+            }
+        });
+
+    </script>
+</body>
+</html>

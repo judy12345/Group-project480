@@ -1,0 +1,152 @@
+/* General styling for the body to center content */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; /* 垂直布局 */
+    align-items: center; /* 水平居中 */
+    overflow-y: auto; /* 确保页面内容可滚动 */
+}
+
+/* Styling the header */
+header {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    background-color: #007bff;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky; /* 顶部固定 */
+    top: 0;
+    z-index: 1000;
+}
+
+/* Centering the container */
+.container {
+    width: 90%; /* 自适应屏幕 */
+    max-width: 800px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+/* Styling for h1 */
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #007bff;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+/* Styling the forms */
+form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%; /* 表单全宽 */
+}
+
+/* Styling labels */
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: left;
+    width: 100%;
+    font-size: 16px;
+}
+
+/* Styling input boxes and textarea */
+input[type="text"], input[type="email"], input[type="number"], textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%; /* 全宽 */
+    box-sizing: border-box; /* 包含内外边距 */
+}
+
+textarea {
+    height: 80px; /* 设置文本框高度 */
+    resize: none; /* 禁止调整大小 */
+}
+
+/* Styling submit button */
+button {
+    padding: 12px;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 50%; /* 按钮宽度 */
+}
+
+    button:hover {
+        background-color: #218838;
+    }
+
+/* Styling the results section */
+.scrollable-results {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    max-height: 300px; /* 限制显示区域高度 */
+    overflow-y: auto; /* 启用滚动条 */
+    white-space: pre-wrap; /* 自动换行 */
+    border-radius: 4px;
+}
+
+/* Search results container */
+.search-results {
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    max-height: 300px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    border-radius: 4px;
+}
+
+#search-results {
+    font-family: monospace;
+    font-size: 14px;
+    color: #333;
+    word-wrap: break-word; /* 长词换行 */
+}
+
+/* Styling p for messages */
+p {
+    margin: 15px 0;
+    text-align: left;
+    color: #878787;
+    font-size: 14px;
+    word-wrap: break-word; /* 长词换行 */
+}
+
+/* Additional styling for headers in sections */
+h2 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #007bff;
+    display: inline-block;
+    padding-bottom: 5px;
+}
